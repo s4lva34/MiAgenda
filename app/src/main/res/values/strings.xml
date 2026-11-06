@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MiAgenda</string>
+    <string name="login_usuario_hint">Usuario</string>
+    <string name="login_contrasena_hint">Contraseña</string>
+    <string name="login_boton_iniciar">Iniciar Sesión</string>
 </resources>
