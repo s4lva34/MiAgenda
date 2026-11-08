@@ -3,4 +3,6 @@
     <string name="login_usuario_hint">Usuario</string>
     <string name="login_contrasena_hint">Contraseña</string>
     <string name="login_boton_iniciar">Iniciar Sesión</string>
+    <string name="login_titulo">Mi Agenda</string>
+    <string name="login_subtitulo">Inicia sesión para ver tus contactos</string>
 </resources>
