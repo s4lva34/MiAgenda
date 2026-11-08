@@ -5,4 +5,6 @@
     <string name="login_boton_iniciar">Iniciar Sesión</string>
     <string name="login_titulo">Mi Agenda</string>
     <string name="login_subtitulo">Inicia sesión para ver tus contactos</string>
+    <string name="lista_titulo">Mis contactos</string>
+    <string name="lista_fab_descripcion">Añadir contacto</string>
 </resources>
