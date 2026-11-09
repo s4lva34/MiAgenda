@@ -15,4 +15,10 @@
     <string name="error_campo_obligatorio">Campo obligatorio</string>
     <string name="error_guardar_contacto">No se pudo guardar el contacto</string>
     <string name="error_cargar_contactos">No se pudieron cargar los contactos</string>
+    <string name="dialogo_borrar_titulo">Eliminar contacto</string>
+    <string name="dialogo_borrar_mensaje">¿Seguro que quieres eliminar a %1$s?</string>
+    <string name="dialogo_cancelar">Cancelar</string>
+    <string name="dialogo_eliminar">Eliminar</string>
+    <string name="contacto_eliminado">Contacto eliminado</string>
+    <string name="error_eliminar_contacto">No se pudo eliminar el contacto</string>
 </resources>
