@@ -24,5 +24,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FormularioContactoActivity::class.java)
             startActivity(intent)
         }
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_cerrar_sesion -> {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
