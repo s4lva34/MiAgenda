@@ -6,9 +6,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.salva.miagenda.data.Contacto
+import com.google.android.material.snackbar.Snackbar
+import com.salva.miagenda.data.AgendaDataBase
 import com.salva.miagenda.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -42,12 +47,20 @@ class MainActivity : AppCompatActivity() {
         binding.rvContactos.layoutManager = LinearLayoutManager(this)
         binding.rvContactos.adapter = adapter
 
-        // Datos de prueba
-        val contactosPrueba = listOf(
-            Contacto(1, "salva", "Ana García", "600123456", "ana@correo.com"),
-            Contacto(2, "salva", "Luis Pérez", "611222333", null),
-            Contacto(3, "salva", "Marta Ruiz", "622444555", "marta@correo.com")
-        )
-        adapter.submitList(contactosPrueba)
+        // Temporal: en la fase 5 el usuario saldrá de DataStore (el que ha iniciado sesión)
+        val usuario = "salva"
+        val dao = AgendaDataBase.obtenerBaseDeDatos(this).contactoDao()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                try {
+                    dao.obtenerContactosDeUsuario(usuario).collect { contactos ->
+                        adapter.submitList(contactos)
+                    }
+                } catch (e: Exception) {
+                    Snackbar.make(binding.root, R.string.error_cargar_contactos, Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }

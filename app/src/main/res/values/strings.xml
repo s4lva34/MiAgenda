@@ -14,4 +14,5 @@
     <string name="lista_menu_cerrar_sesion">Cerrar sesión</string>
     <string name="error_campo_obligatorio">Campo obligatorio</string>
     <string name="error_guardar_contacto">No se pudo guardar el contacto</string>
+    <string name="error_cargar_contactos">No se pudieron cargar los contactos</string>
 </resources>
