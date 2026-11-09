@@ -7,4 +7,8 @@
     <string name="login_subtitulo">Inicia sesión para ver tus contactos</string>
     <string name="lista_titulo">Mis contactos</string>
     <string name="lista_fab_descripcion">Añadir contacto</string>
+    <string name="contacto_nombre_hint">Nombre</string>
+    <string name="contacto_telefono_hint">Teléfono</string>
+    <string name="contacto_email_hint">Email (opcional)</string>
+    <string name="contacto_boton_guardar">Guardar</string>
 </resources>
