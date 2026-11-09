@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.salva.miagenda.data.Contacto
 import com.salva.miagenda.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -35,5 +37,17 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        val adapter = ContactoAdapter()
+        binding.rvContactos.layoutManager = LinearLayoutManager(this)
+        binding.rvContactos.adapter = adapter
+
+        // Datos de prueba
+        val contactosPrueba = listOf(
+            Contacto(1, "salva", "Ana García", "600123456", "ana@correo.com"),
+            Contacto(2, "salva", "Luis Pérez", "611222333", null),
+            Contacto(3, "salva", "Marta Ruiz", "622444555", "marta@correo.com")
+        )
+        adapter.submitList(contactosPrueba)
     }
 }
