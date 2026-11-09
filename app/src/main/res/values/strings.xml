@@ -12,4 +12,6 @@
     <string name="contacto_email_hint">Email (opcional)</string>
     <string name="contacto_boton_guardar">Guardar</string>
     <string name="lista_menu_cerrar_sesion">Cerrar sesión</string>
+    <string name="error_campo_obligatorio">Campo obligatorio</string>
+    <string name="error_guardar_contacto">No se pudo guardar el contacto</string>
 </resources>
