@@ -48,13 +48,18 @@ class FormularioContactoActivity : AppCompatActivity() {
 
         // Temporal: en la fase 5 el usuario saldrá de DataStore (el que ha iniciado sesión)
         val usuario = "salva"
-        val contacto =
-            Contacto(usuario = usuario, nombre = nombre, telefono = telefono, email = email)
+        val contacto = Contacto(
+            id = idContacto,
+            usuario = usuario,
+            nombre = nombre,
+            telefono = telefono,
+            email = email
+        )
         val dao = AgendaDataBase.obtenerBaseDeDatos(this).contactoDao()
 
         lifecycleScope.launch {
             try {
-                dao.insertar(contacto)
+                if (idContacto == 0) dao.insertar(contacto) else dao.actualizar(contacto)
                 finish()
             } catch (e: Exception) {
                 Snackbar.make(binding.root, R.string.error_guardar_contacto, Snackbar.LENGTH_LONG)
@@ -62,6 +67,7 @@ class FormularioContactoActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun rellenarCampos() {
         binding.etNombre.setText(intent.getStringExtra(EXTRA_NOMBRE))
         binding.etTelefono.setText(intent.getStringExtra(EXTRA_TELEFONO))
