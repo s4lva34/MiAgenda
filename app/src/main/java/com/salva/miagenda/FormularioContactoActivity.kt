@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class FormularioContactoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormularioContactoBinding
+    private var idContacto = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +28,10 @@ class FormularioContactoActivity : AppCompatActivity() {
         }
         binding.btnGuardar.setOnClickListener {
             guardarContacto()
+        }
+        idContacto = intent.getIntExtra(EXTRA_ID, 0)
+        if (idContacto != 0 && savedInstanceState == null) {
+            rellenarCampos()
         }
     }
 
@@ -55,6 +61,11 @@ class FormularioContactoActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+    private fun rellenarCampos() {
+        binding.etNombre.setText(intent.getStringExtra(EXTRA_NOMBRE))
+        binding.etTelefono.setText(intent.getStringExtra(EXTRA_TELEFONO))
+        binding.etEmail.setText(intent.getStringExtra(EXTRA_EMAIL))
     }
 
     companion object {
