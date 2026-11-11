@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.salva.miagenda.data.Contacto
 import com.salva.miagenda.databinding.ItemContactoBinding
 
-class ContactoAdapter : ListAdapter<Contacto, ContactoAdapter.ContactoViewHolder>(ContactoDiffCallback) {
+class ContactoAdapter(
+    private val alPulsarContacto: (Contacto) -> Unit
+) : ListAdapter<Contacto, ContactoAdapter.ContactoViewHolder>(ContactoDiffCallback) {
     class ContactoViewHolder(private val binding: ItemContactoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -24,7 +26,9 @@ class ContactoAdapter : ListAdapter<Contacto, ContactoAdapter.ContactoViewHolder
     }
 
     override fun onBindViewHolder(holder: ContactoViewHolder, position: Int) {
-        holder.mostrar(getItem(position))
+        val contacto = getItem(position)
+        holder.mostrar(contacto)
+        holder.itemView.setOnClickListener { alPulsarContacto(contacto) }
     }
 }
 

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var dao: ContactoDao
-    private val adapter = ContactoAdapter()
+    private val adapter = ContactoAdapter { contacto -> abrirFormularioParaEditar(contacto) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -119,5 +119,14 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun abrirFormularioParaEditar(contacto: Contacto) {
+        val intent = Intent(this, FormularioContactoActivity::class.java)
+        intent.putExtra(FormularioContactoActivity.EXTRA_ID, contacto.id)
+        intent.putExtra(FormularioContactoActivity.EXTRA_NOMBRE, contacto.nombre)
+        intent.putExtra(FormularioContactoActivity.EXTRA_TELEFONO, contacto.telefono)
+        intent.putExtra(FormularioContactoActivity.EXTRA_EMAIL, contacto.email)
+        startActivity(intent)
     }
 }

@@ -34,13 +34,16 @@ class FormularioContactoActivity : AppCompatActivity() {
         val telefono = binding.etTelefono.text?.toString().orEmpty().trim()
         val email = binding.etEmail.text?.toString().orEmpty().trim().ifEmpty { null }
 
-        binding.tilNombre.error = if (nombre.isEmpty()) getString(R.string.error_campo_obligatorio) else null
-        binding.tilTelefono.error = if (telefono.isEmpty()) getString(R.string.error_campo_obligatorio) else null
+        binding.tilNombre.error =
+            if (nombre.isEmpty()) getString(R.string.error_campo_obligatorio) else null
+        binding.tilTelefono.error =
+            if (telefono.isEmpty()) getString(R.string.error_campo_obligatorio) else null
         if (nombre.isEmpty() || telefono.isEmpty()) return
 
         // Temporal: en la fase 5 el usuario saldrá de DataStore (el que ha iniciado sesión)
         val usuario = "salva"
-        val contacto = Contacto(usuario = usuario, nombre = nombre, telefono = telefono, email = email)
+        val contacto =
+            Contacto(usuario = usuario, nombre = nombre, telefono = telefono, email = email)
         val dao = AgendaDataBase.obtenerBaseDeDatos(this).contactoDao()
 
         lifecycleScope.launch {
@@ -52,5 +55,12 @@ class FormularioContactoActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_NOMBRE = "extra_nombre"
+        const val EXTRA_TELEFONO = "extra_telefono"
+        const val EXTRA_EMAIL = "extra_email"
     }
 }
