@@ -19,10 +19,13 @@ import com.salva.miagenda.data.Contacto
 import com.salva.miagenda.data.ContactoDao
 import com.salva.miagenda.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import com.salva.miagenda.data.UserPreferences
+import kotlinx.coroutines.flow.first
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var dao: ContactoDao
+    private lateinit var userPreferences: UserPreferences
     private val adapter = ContactoAdapter { contacto -> abrirFormularioParaEditar(contacto) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_cerrar_sesion -> {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    cerrarSesion()
                     true
                 }
 
@@ -54,13 +55,13 @@ class MainActivity : AppCompatActivity() {
         binding.rvContactos.layoutManager = LinearLayoutManager(this)
         binding.rvContactos.adapter = adapter
 
-        // Temporal: en la fase 5 el usuario saldrá de DataStore (el que ha iniciado sesión)
-        val usuario = "salva"
         dao = AgendaDataBase.obtenerBaseDeDatos(this).contactoDao()
+        userPreferences = UserPreferences(this)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 try {
+                    val usuario = userPreferences.credenciales.first().usuario.orEmpty()
                     dao.obtenerContactosDeUsuario(usuario).collect { contactos ->
                         adapter.submitList(contactos)
                     }
@@ -128,5 +129,13 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(FormularioContactoActivity.EXTRA_TELEFONO, contacto.telefono)
         intent.putExtra(FormularioContactoActivity.EXTRA_EMAIL, contacto.email)
         startActivity(intent)
+    }
+
+    private fun cerrarSesion() {
+        lifecycleScope.launch {
+            userPreferences.cerrarSesion()
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finish()
+        }
     }
 }

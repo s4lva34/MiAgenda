@@ -21,4 +21,6 @@
     <string name="dialogo_eliminar">Eliminar</string>
     <string name="contacto_eliminado">Contacto eliminado</string>
     <string name="error_eliminar_contacto">No se pudo eliminar el contacto</string>
+    <string name="error_credenciales_incorrectas">Usuario o contraseña incorrectos</string>
+    <string name="error_iniciar_sesion">No se pudo iniciar sesión</string>
 </resources>

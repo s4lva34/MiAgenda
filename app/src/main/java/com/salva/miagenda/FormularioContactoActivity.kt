@@ -11,6 +11,8 @@ import com.salva.miagenda.data.AgendaDataBase
 import com.salva.miagenda.data.Contacto
 import com.salva.miagenda.databinding.ActivityFormularioContactoBinding
 import kotlinx.coroutines.launch
+import com.salva.miagenda.data.UserPreferences
+import kotlinx.coroutines.flow.first
 
 class FormularioContactoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormularioContactoBinding
@@ -46,19 +48,19 @@ class FormularioContactoActivity : AppCompatActivity() {
             if (telefono.isEmpty()) getString(R.string.error_campo_obligatorio) else null
         if (nombre.isEmpty() || telefono.isEmpty()) return
 
-        // Temporal: en la fase 5 el usuario saldrá de DataStore (el que ha iniciado sesión)
-        val usuario = "salva"
-        val contacto = Contacto(
-            id = idContacto,
-            usuario = usuario,
-            nombre = nombre,
-            telefono = telefono,
-            email = email
-        )
         val dao = AgendaDataBase.obtenerBaseDeDatos(this).contactoDao()
+        val userPreferences = UserPreferences(this)
 
         lifecycleScope.launch {
             try {
+                val usuario = userPreferences.credenciales.first().usuario.orEmpty()
+                val contacto = Contacto(
+                    id = idContacto,
+                    usuario = usuario,
+                    nombre = nombre,
+                    telefono = telefono,
+                    email = email
+                )
                 if (idContacto == 0) dao.insertar(contacto) else dao.actualizar(contacto)
                 finish()
             } catch (e: Exception) {
